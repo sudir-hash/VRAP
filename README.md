@@ -1,7 +1,7 @@
 
 # How to Run
 ```
-cd svelete-ecommerce
+cd svelte-ecommerce
 npm run dev
 ```
 
