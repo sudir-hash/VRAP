@@ -1,0 +1,5 @@
+fastapi[all]
+fastapi-users[beanie,oauth]
+uvicorn[standard]
+email-validator
+httpx_oauth
