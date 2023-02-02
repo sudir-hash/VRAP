@@ -1,4 +1,4 @@
-from app.schemas import OAuthAccount, User
+from schemas import OAuthAccount, User
 import motor.motor_asyncio
 from fastapi_users.db import BeanieUserDatabase
 
