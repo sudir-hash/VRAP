@@ -21,7 +21,7 @@ class User(BeanieBaseUser[PydanticObjectId]):
         title="Linked OAuth accounts",
         description="List of OAuth accounts linked to the user",
     )
- 
+
     lastLogin: datetime = Field(
         default=datetime.now(),
         title="Date and Time of the last login of the user",
@@ -41,20 +41,20 @@ class User(BeanieBaseUser[PydanticObjectId]):
         # #min_length=2,
         # #max_length=256,
     )
-    firstName: str = Field(
-        default_factory=str,
-        title="First name of the user",
-        description="Length of the firstname must be greater than 2 and less than 256",
+    # firstName: str = Field(
+    #     default_factory=str,
+    #     title="First name of the user",
+    #     description="Length of the firstname must be greater than 2 and less than 256",
         # #min_length=2,
         # #max_length=256,
-    )
-    lastName: str = Field(
-        default_factory=str,
-        title="Last name of the user",
-        description="Length of the lastname must be greater than 8 and less than 256",
-        #min_length=2,
-        #max_length=256,
-    )
+    # )
+    # lastName: str = Field(
+    #     default_factory=str,
+    #     title="Last name of the user",
+    #     description="Length of the lastname must be greater than 8 and less than 256",
+        # min_length=2,
+        # max_length=256,
+    # )
     email: EmailStr = Field(
         title="Email ID of the user",
         description="Length of the email Id must be greater than 3 and less than 64",
@@ -74,7 +74,7 @@ class User(BeanieBaseUser[PydanticObjectId]):
 
 
 class UserRead(schemas.BaseUser[PydanticObjectId]):
-   
+
     lastLogin: datetime = Field(
         default=datetime.now(),
         title="Date and Time of the last login of the user",
@@ -91,23 +91,23 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
         default_factory=str,
         title="Name of the user",
         description="Length of the username must be greater than 2 and less than 256",
-        #min_length=2,
+        # min_length=2,
         # #max_length=256,
     )
-    firstName: str = Field(
-        default_factory=str,
-        title="First name of the user",
-        description="Length of the firstname must be greater than 2 and less than 256",
-        #min_length=2,
-        #max_length=256,
-    )
-    lastName: str = Field(
-        default_factory=str,
-        title="Last name of the user",
-        description="Length of the lastname must be greater than 8 and less than 256",
-        #min_length=2,
-        #max_length=256,
-    )
+    # firstName: str = Field(
+    #     default_factory=str,
+    #     title="First name of the user",
+    #     description="Length of the firstname must be greater than 2 and less than 256",
+        # min_length=2,
+        # max_length=256,
+    # )
+    # lastName: str = Field(
+    #     default_factory=str,
+    #     title="Last name of the user",
+    #     description="Length of the lastname must be greater than 8 and less than 256",
+        # min_length=2,
+        # max_length=256,
+    # )
     email: EmailStr = Field(
         title="Email ID of the user",
         description="Length of the email Id must be greater than 3 and less than 64",
@@ -116,8 +116,8 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
         default_factory=str,
         title="Address of the user",
         description="Length of the address must be greater than 1 and less than 256",
-        #min_length=1,
-        #max_length=256,
+        # min_length=1,
+        # max_length=256,
     )
     createdAt: datetime = Field(
         default=datetime.now(),
@@ -127,7 +127,7 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
 
 
 class UserCreate(schemas.BaseUserCreate):
-  
+
     lastLogin: datetime = Field(
         default=datetime.now(),
         title="Date and Time of the last login of the user",
@@ -144,23 +144,23 @@ class UserCreate(schemas.BaseUserCreate):
         default_factory=str,
         title="Name of the user",
         description="Length of the username must be greater than 2 and less than 256",
-        #min_length=2,
-        #max_length=256,
+        # min_length=2,
+        # max_length=256,
     )
-    firstName: str = Field(
-        default_factory=str,
-        title="First name of the user",
-        description="Length of the firstname must be greater than 2 and less than 256",
-        #min_length=2,
-        #max_length=256,
-    )
-    lastName: str = Field(
-        default_factory=str,
-        title="Last name of the user",
-        description="Length of the lastname must be greater than 8 and less than 256",
-        #min_length=2,
-        #max_length=256,
-    )
+    # firstName: str = Field(
+    #     default_factory=str,
+    #     title="First name of the user",
+    #     description="Length of the firstname must be greater than 2 and less than 256",
+        # min_length=2,
+        # max_length=256,
+    # )
+    # lastName: str = Field(
+    #     default_factory=str,
+    #     title="Last name of the user",
+    #     description="Length of the lastname must be greater than 8 and less than 256",
+        # min_length=2,
+        # max_length=256,
+    # )
     email: EmailStr = Field(
         title="Email ID of the user",
         description="Length of the email Id must be greater than 3 and less than 64",
@@ -169,8 +169,8 @@ class UserCreate(schemas.BaseUserCreate):
         default_factory=str,
         title="Address of the user",
         description="Length of the address must be greater than 1 and less than 256",
-        #min_length=1,
-        #max_length=256,
+        # min_length=1,
+        # max_length=256,
     )
     createdAt: datetime = Field(
         default=datetime.now(),
@@ -190,7 +190,7 @@ class UserCreate(schemas.BaseUserCreate):
 
 
 class UserUpdate(schemas.BaseUserUpdate):
- 
+
     lastLogin: datetime = Field(
         default=datetime.now(),
         title="Date and Time of the last login of the user",
@@ -207,46 +207,46 @@ class UserUpdate(schemas.BaseUserUpdate):
         default_factory=str,
         title="Name of the user",
         description="Length of the username must be greater than 2 and less than 256",
-        #min_length=2,
-        #max_length=256,
+        # min_length=2,
+        # max_length=256,
     )
-    firstName: str = Field(
-        default_factory=str,
-        title="First name of the user",
-        description="Length of the firstname must be greater than 2 and less than 256",
-        #min_length=2,
-        #max_length=256,
+    # firstName: str = Field(
+    #     default_factory=str,
+    #     title="First name of the user",
+    #     description="Length of the firstname must be greater than 2 and less than 256",
+        # min_length=2,
+        # max_length=256,
+    # )
+    # lastName: str = Field(
+    #     default_factory=str,
+    #     title="Last name of the user",
+    #     description="Length of the lastname must be greater than 8 and less than 256",
+        # min_length=2,
+        # max_length=256,
+    # )
+    email: EmailStr=Field(
+        title = "Email ID of the user",
+        description = "Length of the email Id must be greater than 3 and less than 64",
     )
-    lastName: str = Field(
-        default_factory=str,
-        title="Last name of the user",
-        description="Length of the lastname must be greater than 8 and less than 256",
-        #min_length=2,
-        #max_length=256,
+    address: str=Field(
+        default_factory = str,
+        title = "Address of the user",
+        description = "Length of the address must be greater than 1 and less than 256",
+        # min_length=1,
+        # max_length=256,
     )
-    email: EmailStr = Field(
-        title="Email ID of the user",
-        description="Length of the email Id must be greater than 3 and less than 64",
-    )
-    address: str = Field(
-        default_factory=str,
-        title="Address of the user",
-        description="Length of the address must be greater than 1 and less than 256",
-        #min_length=1,
-        #max_length=256,
-    )
-    createdAt: datetime = Field(
-        default=datetime.now(),
-        title="Date and Time of the creation of the user",
-        description="Date and time must be in UTC format",
+    createdAt: datetime=Field(
+        default = datetime.now(),
+        title = "Date and Time of the creation of the user",
+        description = "Date and time must be in UTC format",
     )
 
     class Config:
-        schema_extra = {
+        schema_extra={
             "example": {
                 "userName": "Foo",
                 "email": "JohnDoe@gmail.com",
                 "address": "Washington st",
-                "password": "password",
+                "password": "   ",
             }
         }

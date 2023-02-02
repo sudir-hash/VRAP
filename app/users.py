@@ -114,7 +114,7 @@ def get_jwt_strategy() -> JWTStrategy:
         # secret=PRIVATE_KEY,
         # public_key=PUBLIC_KEY,
         lifetime_seconds=3600,
-        algorithm="RS256",
+        algorithm="HS256",
     )
 
 
