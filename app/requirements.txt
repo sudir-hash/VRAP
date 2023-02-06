@@ -1,5 +1,8 @@
 fastapi[all]
 fastapi-users[beanie,oauth]
 uvicorn[standard]
+python-multipart
+python-dotenv
+beanie
 email-validator
 httpx_oauth

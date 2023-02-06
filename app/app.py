@@ -12,6 +12,7 @@ from users import (
     google_oauth_client,
 )
 
+
 app = FastAPI()
 
 current_user = fastapi_users.current_user()
@@ -108,48 +109,60 @@ app.include_router(
 # To check if user is authenticated
 
 
-@app.get("/authenticated-route")
+@app.get("/authenticated-route",tags=["auth"])
 async def authenticated_route(user: User = Depends(current_active_user)):
     return {"message": f"Hello {user.email}!"}
 
 # To check if user is authenticated with a cookie or a JWT
 
 
-@app.get("/protected-route")
+@app.get("/protected-route",tags=["auth"])
 def protected_route(user: User = Depends(current_active_user_auth)):
     return f"Hello, {user.email}. You are authenticated with a cookie or a JWT."
 
 # To check if user is authenticated with a JWT
 
 
-@app.get("/protected-route-only-jwt")
+@app.get("/protected-route-only-jwt",tags=["auth"])
 def protected_route(user: User = Depends(current_active_user_auth)):
     return f"Hello, {user.email}. You are authenticated with a JWT."
 
 # To get if current user is active or not
 
 
-@app.get("/protected-route/status")
+@app.get("/protected-route/status",tags=["auth"])
 def protected_route(user: User = Depends(current_user)):
     return f"Hello, {user.email}"
 
 # To get all currently active users
 
 
-@app.get("/protected-route/active")
+@app.get("/protected-route/active",tags=["auth"])
 def protected_route(user: User = Depends(current_active_user)):
     return f"Hello, {user.email}"
 
 # To get all currently active and verified users
 
 
-@app.get("/protected-route/verified")
+@app.get("/protected-route/verified",tags=["auth"])
 def protected_route(user: User = Depends(current_active_verified_user)):
     return f"Hello, {user.email}"
 
 # To get all currently active superusers
 
 
-@app.get("/protected-route/superuser")
+@app.get("/protected-route/superuser",tags=["auth"])
 def protected_route(user: User = Depends(current_superuser)):
     return f"Hello, {user.email}"
+
+
+@app.include_router(
+    "/product",
+    tags=["product"],
+    include=".product_crud",
+    prefix=None,
+    responses={404: {"description": "Not found"}},
+)
+def product_crud_router():
+    from .product import app as product_crud
+    return product_crud
