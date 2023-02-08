@@ -5,10 +5,8 @@ ref:
 from beanie import PydanticObjectId
 from fastapi_users import schemas
 from fastapi_users.db import BaseOAuthAccount, BeanieBaseUser
-from beanie import Beanie, BaseModel
-from pydantic import Field, EmailStr
-from bson import ObjectId
-from typing import List, Optional
+from pydantic import Field, EmailStr, BaseModel
+from typing import List
 from datetime import datetime
 
 ##################################################
@@ -17,12 +15,51 @@ from datetime import datetime
 
 
 class Product(BaseModel):
-    _id: ObjectId = Beanie(str)
-    name: str
-    description: str
-    price: float
-    image_url: List[str]
-    sizes: List[str]
+    name: str = Field(
+        default_factory=str,
+        title="Name",
+        description="Name of the product",
+        min_length=1,
+        max_length=100,
+    )
+    description: str = Field(
+        default_factory=str,
+        title="Description",
+        description="Description of the product",
+        min_length=1,
+    )
+    price: float = Field(
+        default=float(0),
+        title="Price",
+        description="Price of the product currently in INR",
+        gt=0,
+    )
+    image_url: List[str] = Field(
+        default_factory=list,
+        title="Image URL(s)",
+        description="URL(s) of the image(s) of the product",
+    )
+    sizes: List[str] = Field(
+        default_factory=list,
+        title="Sizes",
+        description="Sizes of the product that are available for sale",
+    )
+    stock: int = Field(
+        default=int(0),
+        title="Stock",
+        description="Stock of the product that is available for sale",
+        ge=0,
+    )
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "image_url": self.image_url,
+            "sizes": self.sizes,
+            "stock": self.stock,
+        }
 
     class Config:
         schema_extra = {
@@ -30,10 +67,14 @@ class Product(BaseModel):
                 "name": "Polo T-shirt",
                 "description": " Black Polo T-shirt with white collar",
                 "price": 499.0,
-                'image_url': ["https://imagescdn.peterengland.com/img/app/product/6/604106-5665723.jpg?auto=format&w=90"],
-                'sizes': ['S', 'M', 'L', 'XL']
+                "image_url": [
+                    "https://imagescdn.peterengland.com/img/app/product/6/604106-5665723.jpg?auto=format&w=90"
+                ],
+                "sizes": ["S", "M", "L", "XL"],
+                "stock": 10,
             }
         }
+
 
 ##################################################
 #                                                  User                                                         #
@@ -101,9 +142,16 @@ class User(BeanieBaseUser[PydanticObjectId]):
         description="Date and time must be in UTC format",
     )
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "email": "JohnDoe@gmail.com",
+                "password": "password",
+                "address": "Washington st",
+            }
+        }
 
 class UserRead(schemas.BaseUser[PydanticObjectId]):
-
     lastLogin: datetime = Field(
         default=datetime.now(),
         title="Date and Time of the last login of the user",
@@ -154,9 +202,16 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
         description="Date and time must be in UTC format",
     )
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "email": "JohnDoe@gmail.com",
+                "password": "password",
+                "address": "Washington st",
+            }
+        }
 
 class UserCreate(schemas.BaseUserCreate):
-
     lastLogin: datetime = Field(
         default=datetime.now(),
         title="Date and Time of the last login of the user",
@@ -218,7 +273,6 @@ class UserCreate(schemas.BaseUserCreate):
 
 
 class UserUpdate(schemas.BaseUserUpdate):
-
     lastLogin: datetime = Field(
         default=datetime.now(),
         title="Date and Time of the last login of the user",

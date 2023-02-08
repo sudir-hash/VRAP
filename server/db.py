@@ -8,6 +8,7 @@ client = motor.motor_asyncio.AsyncIOMotorClient(
     DATABASE_URL, uuidRepresentation="standard"
 )
 db = client["vrap_test_db"]
+products_collection = db["Products"]
 
 
 async def get_user_db():

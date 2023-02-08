@@ -9,7 +9,7 @@ from fastapi_users.authentication import (
     AuthenticationBackend,
     CookieTransport,
     BearerTransport,
-    JWTStrategy
+    JWTStrategy,
 )
 from fastapi_users.db import BeanieUserDatabase, ObjectIDIDMixin
 from httpx_oauth.clients.google import GoogleOAuth2
@@ -51,9 +51,7 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
                 reason="Password should be at least 8 characters"
             )
         if user.email in password:
-            raise InvalidPasswordException(
-                reason="Password should not contain e-mail"
-            )
+            raise InvalidPasswordException(reason="Password should not contain e-mail")
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
         print(f"User {user.id} has registered.")
@@ -78,18 +76,17 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
     ):
         print(f"User {user.id} has forgot their password. Reset token: {token}")
 
-    async def on_after_reset_password(self, user: User, request: Optional[Request] = None):
+    async def on_after_reset_password(
+        self, user: User, request: Optional[Request] = None
+    ):
         print(f"User {user.id} has reset their password.")
 
     async def on_after_request_verify(
         self, user: User, token: str, request: Optional[Request] = None
     ):
-        print(
-            f"Verification requested for user {user.id}. Verification token: {token}")
+        print(f"Verification requested for user {user.id}. Verification token: {token}")
 
-    async def on_after_verify(
-        self, user: User, request: Optional[Request] = None
-    ):
+    async def on_after_verify(self, user: User, request: Optional[Request] = None):
         print(f"User {user.id} has been verified")
 
     async def on_before_delete(self, user: User, request: Optional[Request] = None):
@@ -138,7 +135,7 @@ async def get_enabled_backends(request: Request):
     else:
         return [cookie_backend, jwt_backend]
 
-fastapi_users = FastAPIUsers[User, PydanticObjectId](
-    get_user_manager, [jwt_backend])
+
+fastapi_users = FastAPIUsers[User, PydanticObjectId](get_user_manager, [jwt_backend])
 
 current_active_user = fastapi_users.current_user(active=True)

@@ -3,6 +3,10 @@ fastapi-users[beanie,oauth]
 uvicorn[standard]
 python-multipart
 python-dotenv
-beanie
 email-validator
 httpx_oauth
+
+#optional formatter:
+#- to be enabled in settings->Edit:format on save
+#- and set settings->python.formatter.provider: black
+black
