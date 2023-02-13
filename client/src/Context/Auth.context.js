@@ -1,11 +1,16 @@
 import React,{createContext} from 'react';
-import { useSetState } from 'react-use';
+import { useSetState,useReduc } from 'react-use';
+import axios from "axios";
 
+
+const BASE_URL = "http://0.0.0.0:8003/";
 
 const initialState = {
   isLoggedIn: false,
   isLoginPending: false,
-  loginError: null
+  loginError: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
+  access_token:JSON.parse(localStorage.getItem("access_token")) || null,
 }
 
 export const ContextProvider = props => {
@@ -14,6 +19,7 @@ export const ContextProvider = props => {
   const setLoginSuccess = (isLoggedIn) => setState({isLoggedIn});
   const setLoginError = (loginError) => setState({loginError});
   const login = (email, password) => {
+    console.log('login initiated')
     setLoginPending(true);
     setLoginSuccess(false);
     setLoginError(null);
@@ -24,7 +30,7 @@ export const ContextProvider = props => {
       } else {
         setLoginError(error);
       }
-    })
+    });
   }
 
   const logout = () => {
@@ -47,12 +53,30 @@ export const ContextProvider = props => {
 
 export const AuthContext = createContext(initialState);
 
+const getFormData = (email, password) => {
+  const form = new FormData();
+  form.append('username', email);
+  form.append('password', password);
+  return form;
+}
+
 // fake login
-const fetchLogin = (email, password, callback) => 
-  setTimeout(() => {
-    if (email === 'admin' && password === 'admin') {
-      return callback(null);
-    } else {
+const fetchLogin = async(email, password, callback) => {
+    if(!email || !password){
       return callback(new Error('Invalid email and password'));
     }
-  }, 1000);
+    let form= getFormData(email, password);
+    const res = await axios({
+      method: "post",
+      url: BASE_URL + "auth/jwt/login/",
+      data: form,
+      headers: { "Content-Type": "multipart/form-data" },
+    }); 
+    if(res.data.access_token){
+      sessionStorage.setItem('access_token', res.data.access_token);
+      sessionStorage.setItem('user', email.split('@')[0]);
+      return callback(null);
+    }else{
+      return callback(new Error('Invalid email and password'));
+    }
+}

@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment,useContext } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -12,11 +12,12 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import Form from '../Search-Bar/Form';
 import { Link } from 'react-router-dom';
 
+
 const DrawerNav = () => {
+
         const [state, setState] = useState({
           left: false,
         });
-
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
           return;
@@ -45,7 +46,9 @@ const DrawerNav = () => {
           </List>
           <List>
               <ListItem disablePadding>
+
                 <Control />
+              
               </ListItem>
           </List>
           <List>

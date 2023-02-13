@@ -1,43 +1,47 @@
 import { Link } from "react-router-dom";
 import "./LoginCard.css";
-import axios from "axios";
 import { useContext, useRef } from "react";
-import { AuthContext } from "../../../Context/Auth.context";
-
-const BASE_URL = "http://0.0.0.0:8003/";
+import { AuthContext } from "../../../Context/Context";
+import axios from "axios";
 const LoginCard = () => {
+  const {dispatch} = useContext(AuthContext);
   const userRef = useRef();
-  const passwordRef = useRef();
+  const passwordRef = useRef();  
+  const getFormData = (email, password) => {
+    const form = new FormData();
+    form.append('username', email);
+    form.append('password', password);
+    return form;
+  }
+    
   const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log("userRef", userRef.current.value);
-  //   console.log("passwordRef", passwordRef.current.value);
+    e.preventDefault();
+    let username = userRef.current.value;
+    let password = passwordRef.current.value;
+    if(!username || !password){
+      return alert('Empty Email or Password');
+    }
 
-  //   // dispatch({ type: "LOGIN_START" });
-  //   try {
-  //       const bodyFormData = new FormData();
-  //       bodyFormData.append('username', userRef.current.value);
-  //       bodyFormData.append('password', passwordRef.current.value);
 
-  //       const res = await axios({
-  //         method: "post",
-  //         url: BASE_URL + "auth/jwt/login/",
-  //         data: bodyFormData,
-  //         headers: { "Content-Type": "multipart/form-data" },
-  //       })  
+    dispatch({type:"LOGIN_START"});
+    try {
+      const res = await fetch("http://localhost:8003/auth/jwt/login", {
+        method: "POST",
+        body: getFormData(username, password),
+      });
+      const data = await res.json();
+      console.log("data", data);
+      let payload = {
+        user: username.split('@')[0],
+        access_token: data.access_token,
+      }
+      dispatch({type:"LOGIN_SUCCESS", payload:payload});
+      window.location.href='/';
+    } catch (err) {
+      console.log("err", err);
+      dispatch({type:"LOGIN_FAILURE"});
+    }
 
-  //       console.log("res", res.data);
-  //       if(res.data.access_token){
-  //           window.location.href = "/";
-  //           dispatch({ type: "LOGIN_SUCCESS", payload: userRef.current.value.split('@')[0] });
-  //       }else{
-  //           alert("Invalid Credentials");
-  //           dispatch({ type: "LOGIN_FAILURE" });
-  //       }
-  //   } catch (err) {
-  //       dispatch({ type: "LOGIN_FAILURE" });
-  //       console.log(err);
-  //   }
   };
 
   return (
@@ -48,20 +52,22 @@ const LoginCard = () => {
         </div>
         <div className="login__inputs">
           <div className="email__input__container input__container">
-            <label className="email__label input__label">Email</label>
+            <label className="email__label input__label" >Email</label>
             <input
-              type="email"
+              type="text"
               className="email__input login__input"
               placeholder="example@gmail.com"
               ref={userRef}
+              value="JohnDoe@gmail.com"
             />
           </div>
           <div className="password__input__container input__container">
-            <label className="password__label input__label">Password</label>
+            <label className="password__label input__label" >Password</label>
             <input
               type="password"
               className="password__input login__input"
               placeholder="**********"
+              value={"password"}
               ref={passwordRef}
             />
           </div>

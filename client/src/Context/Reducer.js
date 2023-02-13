@@ -8,9 +8,11 @@ const Reducer = (state, action) => {
       };
     case "LOGIN_SUCCESS":
       return {
-        user: action.payload,
+        user: action.payload.user,
+        access_token: action.payload.access_token,
         isFetching: false,
         error: false,
+        isLoggedIn: true,
       };
     case "LOGIN_FAILURE":
       return {
@@ -25,13 +27,15 @@ const Reducer = (state, action) => {
         };
       case "UPDATE_SUCCESS":
         return {
-          user: action.payload,
+          user: action.payload.user,
+          access_token: action.payload.access_token,
           isFetching: false,
           error: false,
         };
       case "UPDATE_FAILURE":
         return {
           user: state.user,
+          access_token: state.access_token,
           isFetching: false,
           error: true,
         };

@@ -7,9 +7,10 @@ import Cart from '../../Card/Cart/Cart';
 import { useContext } from 'react';
 import { WishItemsContext } from '../../../Context/WishItemsContext';
 
+import { AuthContext } from '../../../Context/Context';
 const Control = () => {
-    const wishItems = useContext(WishItemsContext)
-
+    const wishItems = useContext(WishItemsContext);
+    const {isLoggedIn} = useContext(AuthContext);
     return ( 
         <div className="control__bar__container">
             <div className="controls__container">
