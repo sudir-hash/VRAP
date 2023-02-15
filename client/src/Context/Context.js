@@ -1,10 +1,11 @@
 import { createContext, useEffect, useReducer } from "react";
 import Reducer from "./Reducer";
 const INITIAL_STATE = {
-  user:         (localStorage.getItem("user"))===undefined?null:JSON.parse(localStorage.getItem("user")),
-  access_token:  (localStorage.getItem("access_token"))===undefined?null:JSON.parse(localStorage.getItem("access_token")),
+  user:         (localStorage.getItem("user"))=="undefined"?null:JSON.parse(localStorage.getItem("user")),
+  access_token:  (localStorage.getItem("access_token"))=="undefined"?null:JSON.parse(localStorage.getItem("access_token")),
   isFetching: false,
   error: false,
+  isLogged: false,
 };
 
 export const AuthContext = createContext(INITIAL_STATE);

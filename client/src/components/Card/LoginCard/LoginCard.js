@@ -2,18 +2,12 @@ import { Link } from "react-router-dom";
 import "./LoginCard.css";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../../Context/Context";
-import axios from "axios";
+import  getFormData  from "../../../utils/getFormData";
+
 const LoginCard = () => {
   const {dispatch} = useContext(AuthContext);
   const userRef = useRef();
   const passwordRef = useRef();  
-  const getFormData = (email, password) => {
-    const form = new FormData();
-    form.append('username', email);
-    form.append('password', password);
-    return form;
-  }
-    
   const handleSubmit = async (e) => {
     e.preventDefault();
     let username = userRef.current.value;
@@ -21,13 +15,11 @@ const LoginCard = () => {
     if(!username || !password){
       return alert('Empty Email or Password');
     }
-
-
     dispatch({type:"LOGIN_START"});
     try {
       const res = await fetch("http://localhost:8003/auth/jwt/login", {
         method: "POST",
-        body: getFormData(username, password),
+        body: getFormData({username, password}),
       });
       const data = await res.json();
       console.log("data", data);

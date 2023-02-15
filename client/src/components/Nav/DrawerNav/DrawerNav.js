@@ -46,9 +46,7 @@ const DrawerNav = () => {
           </List>
           <List>
               <ListItem disablePadding>
-
                 <Control />
-              
               </ListItem>
           </List>
           <List>

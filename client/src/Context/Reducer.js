@@ -12,7 +12,6 @@ const Reducer = (state, action) => {
         access_token: action.payload.access_token,
         isFetching: false,
         error: false,
-        isLoggedIn: true,
       };
     case "LOGIN_FAILURE":
       return {
