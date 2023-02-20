@@ -75,9 +75,9 @@ const LoginCard = () => {
           <div className="login__forgot__password">Forgot password?</div>
           <div className="login__new__account">
             Don't have account?{" "}
-            <span className="create_acc" >
-              <Link to="/account/register">Create account</Link>{" "}
-            </span>
+            
+              <Link to="/account/register"><span className="create_acc" >Create account</span></Link>{" "}
+            
           </div>
         </div>
       </form>
