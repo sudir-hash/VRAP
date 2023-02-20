@@ -1,79 +1,108 @@
-import { Link } from 'react-router-dom';
-import {  useRef } from 'react';
-import './RegisterCard.css';
-import  getFormData  from "../../../utils/getFormData";
-
+import { Link } from "react-router-dom";
+import { useRef } from "react";
+import "./RegisterCard.css";
+import getFormData from "../../../utils/getFormData";
 
 const RegisterCard = () => {
-    const fnameRef=useRef();
-    const lnameRef=useRef();
-    const emailRef=useRef();
-    const passwordRef = useRef();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        let fname = fnameRef.current.value;
-        let lname = lnameRef.current.value;
-        let email = emailRef.current.value;
-        let password = passwordRef.current.value;
-        if(!fname || !lname || !email || !password){
-            return alert('Empty Fields');
-        }
-        try {
-            const res = await fetch("http://localhost:8003/auth/jwt/register", {
-                method: "POST",
-                body: getFormData({fname, lname, email, password}),
-            });
-            const data = await res.json();
-            console.log("data", data);
-            if(data.hasOwnProperty('email'))
-            window.location.href='/';
-            
-            else{
-                console.log('error', data)
-                alert('error while registering')
-                window.location.href='/account/register';
-            }
-        } catch (err) {
-            alert('error while registering')
-            window.location.href='/register';
-            console.log("err", err);
-        }
-    };
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const addressRef = useRef();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let name = nameRef.current.value;
+    let email = emailRef.current.value;
+    let password = passwordRef.current.value;
+    let address = addressRef.current.value;
+    if (!name || !email || !password || !address) {
+      return alert("Empty Fields Kindly Fill All Fields");
+    }
+    try {
+      let form = {
+        email,
+        password,
+        address,
+      };
+      form = JSON.stringify(form);
+      console.log(form, typeof form);
+      const res = await fetch("http://localhost:8003/auth/register", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: form,
+      });
+      const data = await res.json();
+      console.log("data", data);
+      if(!data.hasOwnProperty('detail'))
+          window.location.href='/';
+      else{
+        console.log("error", data.detail);
+        alert("error while registering", data.detail);
+        window.location.href='/account/register';
+      }
+    } catch (err) {
+      alert("error while registering", err.detail);
+      window.location.href = "/register";
+      console.log("err", err);
+    }
+  };
 
-
-    return ( 
-        <div className="register__card__container">
-            <div className="register__card">
-                <div className="register__header">
-                    <h1>Create Account</h1>
-                </div>
-                <div className="register__inputs">
-                <div className="fname__input__container reg__input__container">
-                        <label className="fname__label input__label">First name</label>
-                        <input type="text" className="fname__input register__input" ref={fnameRef}/>
-                    </div>
-                    <div className="lname__input__container reg__input__container">
-                        <label className="lname__label input__label">Last name</label>
-                        <input type="text" className="lname__input register__input" ref={lnameRef}/>
-                    </div>
-                    <div className="email__input__container reg__input__container">
-                        <label className="email__label input__label">Email</label>
-                        <input type="email" className="email__input register__input" placeholder='example@gmail.com' ref={emailRef}/>
-                    </div>
-                    <div className="password__input__container reg__input__container">
-                        <label className="password__label input__label">Password</label>
-                        <input type="password" className="password__input register__input" ref={passwordRef}/>
-                    </div>
-                    <div className="register__button__container">
-                        <button className="register__button" onClick={handleSubmit} >Create Account</button>
-                    </div>
-                </div>
-                <div className="register__other__actions">
-                    <div className="register__login__account">Already have account? <Link to="/account/login">Login</Link></div>
-                </div>
-            </div>
+  return (
+    <div className="register__card__container">
+      <div className="register__card">
+        <div className="register__header">
+          <h1>Create Account</h1>
         </div>
-     );
-}
- 
+        <div className="register__inputs">
+          <div className="fname__input__container reg__input__container">
+            <label className="fname__label input__label"> Name</label>
+            <input
+              type="text"
+              className="fname__input register__input"
+              ref={nameRef}
+            />
+          </div>
+          <div className="email__input__container reg__input__container">
+            <label className="email__label input__label">Email</label>
+            <input
+              type="email"
+              className="email__input register__input"
+              placeholder="example@gmail.com"
+              ref={emailRef}
+            />
+          </div>
+          <div className="password__input__container reg__input__container">
+            <label className="password__label input__label">Password</label>
+            <input
+              type="password"
+              className="password__input register__input"
+              ref={passwordRef}
+            />
+          </div>
+          <div className="password__input__container reg__input__container">
+            <label className="password__label input__label">Address</label>
+            <input
+              type="text"
+              className="password__input register__input"
+              ref={addressRef}
+            />
+          </div>
+          <div className="register__button__container">
+            <button className="register__button" onClick={handleSubmit}>
+              Create Account
+            </button>
+          </div>
+        </div>
+        <div className="register__other__actions">
+          <div className="register__login__account">
+            Already have account? <Link to="/account/login">Login</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default RegisterCard;

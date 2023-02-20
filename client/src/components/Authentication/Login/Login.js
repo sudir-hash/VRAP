@@ -4,13 +4,11 @@ import "./Login.css";
 
 const Login = () => {
   return (
-    // <AuthContextProvider>
       <div className="login__auth__container">
         <div className="login__auth">
           <LoginCard />
         </div>
       </div>
-// </AuthContextProvider>
   );    
 };
 

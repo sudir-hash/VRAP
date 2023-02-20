@@ -62,8 +62,8 @@ const DrawerNav = () => {
 
     return ( 
         <Fragment>
-            {['left'].map((anchor) => (
-                <Fragment >
+            {['left'].map((anchor,id) => (
+                <Fragment key={id}>
                 {state.left? <MenuOpenIcon fontSize='large' /> : <MenuIcon fontSize='large' onClick={toggleDrawer(anchor, true)} />}
                 <Drawer
                     anchor={anchor}
