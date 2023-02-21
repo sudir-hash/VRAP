@@ -13,6 +13,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const CartCard = (props) => {
     let cartItems  = useContext(CartItemsContext)
+    console.log(props.item)
     const [size, setSize] = useState(props.item.size[0]);
 
     const handelQuantityIncrement = (event) => {
@@ -37,7 +38,7 @@ const CartCard = (props) => {
         <div className='cart__item__card'>
             <div className="cart__item__detail">
                 <div className="cart__item__image">
-                    <img src={`https://shema-ecommerce.herokuapp.com/${props.item.category}/${props.item.image[0].filename}`} alt="item" className="item__image"/>
+                    <img src={props.item.image[0]} alt="item" className="item__image"/>
                 </div>
                 <div className="cart__item__name">{props.item.name}</div>
             </div>

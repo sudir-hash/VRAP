@@ -8,8 +8,7 @@ import CartCard from './CartCard/CartCard';
 import './Cart.css'
 import Button from '@mui/material/Button';
 import axios from 'axios';
-
-
+import { useNavigate } from "react-router-dom";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -26,6 +25,8 @@ const style = {
 };
 
 const Cart = () => {
+    const navigate = useNavigate();
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -35,26 +36,37 @@ const Cart = () => {
     const handleCheckoutClose = () => setOpenCheckoutModal(false);
 
     const cartItems = useContext(CartItemsContext);
-
+    console.log("cartItems",cartItems);
     const handleCheckout = async () => {
-        if(cartItems.totalAmount > 0){
-            const config = {
-                reason: 'checkout',
-                amount: cartItems.totalAmount
-            }
+        // if(cartItems.totalAmount > 0){
+            if(cartItems.totalAmount <= 0)return;
+            // const config = {
+            //     reason: 'checkout',
+            //     amount: cartItems.totalAmount
+            // }
+            console.log("checkout")
+            handleCheckoutOpen();
+            handleClose();
+            setTimeout(()=>{
+                handleCheckoutClose();
+                navigate('/category/men');
 
-        await axios.post("http://localhost:5000/api/payment", config)
-            .then((res) => {
-                    console.log(res.data)
-                    window.location.replace(res.data)
-                    handleCheckoutOpen()
-                }
-            )
-            .catch((err) => console.log(err))
-        }
-        else {
-            return
-        }
+                // window.location.replace("/category/men")
+            }, 500)
+
+        // await axios.post("http://localhost:5000/api/payment", config)
+        //     .then((res) => {
+        //             console.log(res.data)
+        //             window.location.replace(res.data)
+        //             handleCheckoutOpen()
+        //         }
+        //     )
+        //     .catch((err) => console.log(err))
+        // }
+        // else {
+        //     return
+        // }
+        
     }
 
     return (
@@ -90,7 +102,7 @@ const Cart = () => {
                                 </div>
                             }
                             </div>
-                        </div>
+                    </div>
                     </Box>
                 </Modal>
                 <Modal

@@ -17,6 +17,7 @@ const ItemCard = (props) => {
     }
 
     const handleAddToCart = () => {
+        console.log(props.item)
         cartItemsContext.addItem(props.item, 1)
     }
 
@@ -27,19 +28,19 @@ const ItemCard = (props) => {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 > 
-                    {isHovered? <img src={`https://shema-backend.vercel.app/public/${props.item.category}/${props.item.image[1].filename}`} alt="item" className="product__img"/>: <img src= {`https://shema-backend.vercel.app/public/${props.item.category}/${props.item.image[0].filename}`} alt="item" className="product__img"/> }
+                    {isHovered? <img src={props.item.image_url[0]} alt="item" className="product__img"/>: <img src={props.item.image_url[1]} alt="item" className="product__img"/> }
                 </div>
                 <div className="product__card__detail">
-                    <div className="product__name">
+                    {/* <div className="product__name">
                         <Link to={`/item/${props.item.category}/${props.item._id}`}>
                            {props.item.name}
                         </Link>
-                    </div>
+                    </div> */}
                     <div className="product__description">
                         <span>{props.item.description}</span>
                     </div>
                     <div className="product__price">
-                        <span>${props.item.price}</span>
+                        <span>₹{props.item.price}</span>
                     </div>
                     <div className="product__card__action">
                         <IconButton onClick={handleAddToWishList} sx={ {borderRadius: '20px', width: '40px', height: '40px', /* borderWidth: '3px', borderStyle: 'solid', borderColor: '#FFE26E' */ }  }>
@@ -56,3 +57,22 @@ const ItemCard = (props) => {
 }
  
 export default ItemCard;
+
+/**
+  {
+    "_id": "63f4aa30d64e1e395f3b4e7c",
+    "name": "Dennis Lingo Men's Solid Slim Fit Cotton Casual Shirt with Spread Collar & Full Sleeves",
+    "description": " Black Polo T-shirt with white collar",
+    "price": 399,
+    "image_url": [
+      "https://m.media-amazon.com/images/I/61Ikn0SD7RL._UX679_.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": 3
+  }
+ */
