@@ -28,13 +28,14 @@
     transition: 1s;
     position: absolute;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    
 
     
 }
 
 .category__image:hover{
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-
+    transition: all 200ms ease-in;
+    transform: scale(1.1);
 }
 
 .category__image > img{
