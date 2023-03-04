@@ -4,6 +4,7 @@ import { Route , Routes} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from '../routes/Home';
+import AdminPage from '../routes/AdminPage';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import ManageAccount from '../components/Account/ManageAccount/ManageAccount';
@@ -20,6 +21,7 @@ import WishItemsProvider from '../Context/WishItemsProvider';
 import DrawerNav from '../components/Nav/DrawerNav/DrawerNav';
 import Checkout from '../components/Checkout/Checkout';
 import SearchProvider from '../Context/SearchProvider';
+
 import { AuthContextProvider } from '../Context/Context';
 
 function App() {
@@ -61,10 +63,10 @@ function App() {
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/search/*" element={<SearchView />} />
               </Routes>
-              <Footer />
               <Routes>
-              <Route path="/admin" element={<Wishlist />} />
+              <Route path="/admin" element={<AdminPage />} />
               </Routes>
+              <Footer />
             </Router>
           </SearchProvider>
         </WishItemsProvider>
