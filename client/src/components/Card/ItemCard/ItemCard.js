@@ -20,6 +20,7 @@ const ItemCard = (props) => {
         console.log(props.item)
         cartItemsContext.addItem(props.item, 1)
     }
+    console.log(props.item)
 
     return ( 
         <div className="product__card__card">
@@ -28,7 +29,7 @@ const ItemCard = (props) => {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 > 
-                    {isHovered? <img src={props.item.image_url[0]} alt="item" className="product__img"/>: <img src={props.item.image_url[1]} alt="item" className="product__img"/> }
+                    {isHovered? <img src={props.item.image[0]} alt="item" className="product__img"/>: <img src={props.item.image[0]} alt="item" className="product__img"/> }
                 </div>
                 <div className="product__card__detail">
                     {/* <div className="product__name">
@@ -64,7 +65,7 @@ export default ItemCard;
     "name": "Dennis Lingo Men's Solid Slim Fit Cotton Casual Shirt with Spread Collar & Full Sleeves",
     "description": " Black Polo T-shirt with white collar",
     "price": 399,
-    "image_url": [
+    "image": [
       "https://m.media-amazon.com/images/I/61Ikn0SD7RL._UX679_.jpg"
     ],
     "sizes": [
