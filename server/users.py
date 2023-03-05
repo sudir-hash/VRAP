@@ -85,7 +85,7 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
         self, user: User, token: str, request: Optional[Request] = None
     ):
         print(f"Verification requested for user {user.id}. Verification token: {token}")
-        return {"message": "Verification requested"}
+
     async def on_after_verify(self, user: User, request: Optional[Request] = None):
         print(f"User {user.id} has been verified")
 

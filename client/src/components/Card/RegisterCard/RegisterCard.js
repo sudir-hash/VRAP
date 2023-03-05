@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import "./RegisterCard.css";
-import getFormData from "../../../utils/getFormData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const RegisterCard = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const addressRef = useRef();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let name = nameRef.current.value;
@@ -15,7 +19,7 @@ const RegisterCard = () => {
     let password = passwordRef.current.value;
     let address = addressRef.current.value;
     if (!name || !email || !password || !address) {
-      return alert("Empty Fields Kindly Fill All Fields");
+      return toast("Empty Fields Kindly Fill All Fields");
     }
     try {
       let form = {
@@ -35,15 +39,16 @@ const RegisterCard = () => {
       });
       const data = await res.json();
       console.log("data", data);
-      if(!data.hasOwnProperty('detail'))
-          window.location.href='/';
-      else{
-        console.log("error", data.detail);
-        alert("error while registering", data.detail);
-        window.location.href='/account/register';
-      }
+      // if(!data.hasOwnProperty('detail'))
+      //    navigate('/account/login')
+      // else{
+      //   console.log("error", data.detail);
+      //   toast("error while registering", data.detail);
+      //     setTimeout(()=>navigate('/account/register'),500)
+      //   ;
+      // }
     } catch (err) {
-      alert("error while registering", err.detail);
+      toast("error while registering", err.detail);
       window.location.href = "/register";
       console.log("err", err);
     }
@@ -62,6 +67,7 @@ const RegisterCard = () => {
               type="text"
               className="fname__input register__input"
               ref={nameRef}
+              value="John Doe"
             />
           </div>
           <div className="email__input__container reg__input__container">
@@ -71,6 +77,7 @@ const RegisterCard = () => {
               className="email__input register__input"
               placeholder="example@gmail.com"
               ref={emailRef}
+              value="newuser0login@gmail.com"
             />
           </div>
           <div className="password__input__container reg__input__container">
@@ -79,6 +86,7 @@ const RegisterCard = () => {
               type="password"
               className="password__input register__input"
               ref={passwordRef}
+              value="Patrick#123456"
             />
           </div>
           <div className="password__input__container reg__input__container">
@@ -87,6 +95,7 @@ const RegisterCard = () => {
               type="text"
               className="password__input register__input"
               ref={addressRef}
+              value="1234, 5th Street, New York, NY 10001"
             />
           </div>
           <div className="register__button__container">
@@ -101,6 +110,18 @@ const RegisterCard = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

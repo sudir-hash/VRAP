@@ -2,38 +2,32 @@ import { Link } from "react-router-dom";
 import "./LoginCard.css";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../../Context/Context";
-import  getFormData  from "../../../utils/getFormData";
+import getFormData from "../../../utils/getFormData";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginCard = () => {
-  const {dispatch} = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   const userRef = useRef();
-  const passwordRef = useRef();  
+  const passwordRef = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
     let username = userRef.current.value;
     let password = passwordRef.current.value;
-    if(!username || !password){
-      return alert('Empty Email or Password');
+    if (!username || !password) {
+      return toast("Empty Email or Password");
     }
-    dispatch({type:"LOGIN_START"});
-    try {
-      const res = await fetch("http://localhost:8003/auth/jwt/login", {
-        method: "POST",
-        body: getFormData({username, password}),
-      });
-      const data = await res.json();
-      console.log("data", data);
-      let payload = {
-        user: username.split('@')[0],
-        access_token: data.access_token,
-      }
-      dispatch({type:"LOGIN_SUCCESS", payload:payload});
-      window.location.href='/';
-    } catch (err) {
-      console.log("err", err);
-      dispatch({type:"LOGIN_FAILURE"});
+    
+    hadleLogin(dispatch,username,password).then((res)=>{
+      console.log("res", res);
+      if(res.data.access_token)
+        navigate('/');
+      else 
+        toast("Please login again");
     }
-
+    );
   };
 
   return (
@@ -44,22 +38,22 @@ const LoginCard = () => {
         </div>
         <div className="login__inputs">
           <div className="email__input__container input__container">
-            <label className="email__label input__label" >Email</label>
+            <label className="email__label input__label">Email</label>
             <input
               type="text"
               className="email__input login__input"
               placeholder="example@gmail.com"
               ref={userRef}
-              value="JohnDoe@gmail.com"
+              value="newuser0login@gmail.com"
             />
           </div>
           <div className="password__input__container input__container">
-            <label className="password__label input__label" >Password</label>
+            <label className="password__label input__label">Password</label>
             <input
               type="password"
               className="password__input login__input"
               placeholder="**********"
-              value={"password"}
+              value={"Patrick#123456"}
               ref={passwordRef}
             />
           </div>
@@ -75,12 +69,24 @@ const LoginCard = () => {
           <div className="login__forgot__password">Forgot password?</div>
           <div className="login__new__account">
             Don't have account?{" "}
-            
-              <Link to="/account/register"><span className="create_acc" >Create account</span></Link>{" "}
-            
+            <Link to="/account/register">
+              <span className="create_acc">Create account</span>
+            </Link>{" "}
           </div>
         </div>
       </form>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
