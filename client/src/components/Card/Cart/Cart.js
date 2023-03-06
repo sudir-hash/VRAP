@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { CartItemsContext } from '../../../Context/CartItemsContext';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -27,6 +27,7 @@ const style = {
 
 const Cart = () => {
     const navigate = useNavigate();
+   
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -35,40 +36,31 @@ const Cart = () => {
     const [ openCheckoutModal, setOpenCheckoutModal] = useState(false);
     const handleCheckoutOpen = () => setOpenCheckoutModal(true);
     const handleCheckoutClose = () => setOpenCheckoutModal(false);
-
-    
-
     const cartItems = useContext(CartItemsContext);
     console.log("cartItems",cartItems);
     const handleCheckout = async () => {
-        // if(cartItems.totalAmount > 0){
             if(cartItems.totalAmount <= 0)return;
-            // const config = {
-            //     reason: 'checkout',
-            //     amount: cartItems.totalAmount
-            // }
             console.log("checkout")
             handleCheckoutOpen();
             handleClose();
-            setTimeout(()=>{
-                handleCheckoutClose();
-                // navigate('/category/men');
-            }, 500)
-
-        // await axios.post("http://localhost:5000/api/payment", config)
-        //     .then((res) => {
-        //             console.log(res.data)
-        //             window.location.replace(res.data)
-        //             handleCheckoutOpen()
-        //         }
-        //     )
-        //     .catch((err) => console.log(err))
-        // }
-        // else {
-        //     return
-        // }
+            for(let item of cartItems.items){
+                await axios.post(`http://localhost:8003/product/buy/${item._id}`)
+                .then((res) => {
+                        console.log(res.data)
+                    }
+                )
+                .catch((err) => {
+                    console.log(err);
+                });
+                cartItems.removeItem(item)
+            }
+           
+            
+            handleCheckoutOpen();
+        }
+       
         
-    }
+    
 
     return (
         <Fragment>
