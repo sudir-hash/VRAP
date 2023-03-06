@@ -1,28 +1,39 @@
 import handleVerification from "./handleVerification";
 import getFormData from "./getFormData";
-const handleLogin=async(dispatch,data)=>{
-    dispatch({ type: "LOGIN_START" });
+import axios from "axios";
+const handleLogin=async({email,password})=>{
+    
     try {
-     const verified = await handleVerification(data.email,data.password);
+    //  const verified = await handleVerification(email,password);
     //  if(verified.data.detail) return toast(verified.data.detail);
-      const res = await fetch("http://localhost:8003/auth/jwt/login", {
-        method: "POST",
-        body: getFormData({ username, password }),
+      const res = await axios('http://localhost:8003/auth/jwt/login',{
+        method:'POST',
+        data:getFormData({username:email,password}),
+        headers:{
+          'Content-Type':'application/x-www-form-urlencoded',          
+        }
       });
-      const data = await res.json();
-      console.log("data", data);
-      if (data.detail) return toast(data.detail);
+      const data = res.data;
+      if (data.detail) return {
+        ok:false,
+        error:data.detail
+      };
       let payload = {
-        user: username.split("@")[0],
+        user: email.split("@")[0],
         access_token: data.access_token,
       };
-      dispatch({ type: "LOGIN_SUCCESS", payload: payload });
-      if(data.access_token)
-        navigate('/');
-      else 
-        toast("Please login again");
+      return {
+        ok:true,
+        data:payload
+      };
     } catch (err) {
       console.log("err", err);
-      dispatch({ type: "LOGIN_FAILURE" });
+      return {
+        ok:false,
+        error:err
+      }
     }
 }
+
+
+export default handleLogin;

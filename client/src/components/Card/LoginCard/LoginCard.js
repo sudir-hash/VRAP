@@ -6,28 +6,40 @@ import getFormData from "../../../utils/getFormData";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import handleLogin from "../../../utils/handleLogin";
 
 const LoginCard = () => {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-  const userRef = useRef();
+  const emailRef = useRef();
   const passwordRef = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let username = userRef.current.value;
+    let email = emailRef.current.value;
     let password = passwordRef.current.value;
-    if (!username || !password) {
+    if (!email || !password) {
       return toast("Empty Email or Password");
     }
-    
-    hadleLogin(dispatch,username,password).then((res)=>{
-      console.log("res", res);
-      if(res.data.access_token)
-        navigate('/');
-      else 
+    dispatch({ type: "LOGIN_START" });
+    handleLogin({ email, password })
+      .then((res) => {
+        console.log("res", res);
+        if (!res.ok) {
+          dispatch({ type: "LOGIN_FAILURE" });
+          toast(res.error);
+        } else if (res.data.access_token) {
+          dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+          navigate("/");
+        } else {
+          dispatch({ type: "LOGIN_FAILURE" });
+          toast("Please login again");
+        }
+      })
+      .catch((e) => {
+        dispatch({ type: "LOGIN_FAILURE" });
+        console.error("error while logging in", e);
         toast("Please login again");
-    }
-    );
+      });
   };
 
   return (
@@ -43,7 +55,7 @@ const LoginCard = () => {
               type="text"
               className="email__input login__input"
               placeholder="example@gmail.com"
-              ref={userRef}
+              ref={emailRef}
               value="newuser0login@gmail.com"
             />
           </div>
