@@ -61,7 +61,7 @@ app.include_router(
 
 # Auth router to generate /login and /logout
 app.include_router(
-    fastapi_users.get_auth_router(jwt_backend, requires_verification=True),
+    fastapi_users.get_auth_router(jwt_backend, requires_verification=False),
     prefix="/auth/jwt",
     tags=["auth"],
 )
