@@ -28,7 +28,7 @@ const ItemCard = (props) => {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 > 
-                    {/* {isHovered? <img src={props.item.image_url[0]} alt="item" className="product__img"/>: <img src={props.item.image_url[1]} alt="item" className="product__img"/> } */}
+                    {!isHovered? <img src={props.item.image_url[0]} alt="item" className="product__img"/>: <img src={props.item.image_url[props.item.image_url.length>1?1:0]} alt="item" className="product__img"/> }
                 </div>
                 <div className="product__card__detail">
                     {/* <div className="product__name">

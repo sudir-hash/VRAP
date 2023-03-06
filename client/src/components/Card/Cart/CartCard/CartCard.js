@@ -10,6 +10,9 @@ import { CartItemsContext } from '../../../../Context/CartItemsContext';
 import { IconButton } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
+import { maxWidth } from '@mui/system';
+
 
 const CartCard = (props) => {
     let cartItems  = useContext(CartItemsContext)
@@ -65,7 +68,15 @@ const CartCard = (props) => {
                     </FormControl>
                 </Box>
             </div>
-            <div className="cart__item__price">${props.item.price}</div>
+                <div className="cart__item__price">₹ {props.item.price}</div>
+            <div className="product customization">
+                <TextareaAutosize
+                    aria-label="maximum height" 
+                    placeholder="Customization"
+                    className="customization__input"
+                    minRows={4}
+                />                
+            </div>
             <div className="remove__item__icon">
                 <IconButton>
                     <HighlightOffIcon onClick={handelRemoveItem}/>

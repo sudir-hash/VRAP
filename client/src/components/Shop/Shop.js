@@ -13,11 +13,11 @@ const Shop = () => {
     const [ loading , setLoading ] = useState(true) 
 
     useEffect(() => {
-        axios.get("https://shema-backend.vercel.app/api/items")
+        axios.get("http://localhost:8003/product/view-all")
             .then(res => {
-                setMenItems(res.data.filter((item) => item.category === "men"))
-                setKidsItems(res.data.filter((item) => item.category === "kids" ))
-                setWomenItems(res.data.filter((item) => item.category === "women"))
+                let items=res.data.map(item=>({...item,image:item.image_url}))
+                console.log(items)
+                setMenItems(res.data)
                 setLoading(false)
             })
             .catch(err => console.log(err))
@@ -29,8 +29,8 @@ const Shop = () => {
         <div className="shop__contianer">
             {loading && <ReactLoading type="balls" color='#FFE26E'  height={100} width={100} className='container h-100 w-10 justify-self-center align-self-center m-auto'/>}
             {menItems && <ShopCategory name="Men" key="men" items={menItems}/>}
-            {womenItems && <ShopCategory name="Women" key="women" items={womenItems}/>}
-            {kidsItems && <ShopCategory name="Kids" key="kids" items={kidsItems}/>}
+            {/* {womenItems && <ShopCategory name="Women" key="women" items={womenItems}/>}
+            {kidsItems && <ShopCategory name="Kids" key="kids" items={kidsItems}/>} */}
         </div>
      );
 }

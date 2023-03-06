@@ -14,14 +14,15 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  minWidth: '350px',
+  minWidth: '950px',
   width: '45%',
-  height: '400px',
+  minHeight: '700px',
+  height: '80%',
   bgcolor: 'background.paper',
   border: '5px solid #FFE26E',
   borderRadius: '15px',
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 const Cart = () => {
@@ -34,6 +35,8 @@ const Cart = () => {
     const [ openCheckoutModal, setOpenCheckoutModal] = useState(false);
     const handleCheckoutOpen = () => setOpenCheckoutModal(true);
     const handleCheckoutClose = () => setOpenCheckoutModal(false);
+
+    
 
     const cartItems = useContext(CartItemsContext);
     console.log("cartItems",cartItems);
@@ -49,9 +52,7 @@ const Cart = () => {
             handleClose();
             setTimeout(()=>{
                 handleCheckoutClose();
-                navigate('/category/men');
-
-                // window.location.replace("/category/men")
+                // navigate('/category/men');
             }, 500)
 
         // await axios.post("http://localhost:5000/api/payment", config)
@@ -77,6 +78,7 @@ const Cart = () => {
                 <Modal
                     open={open}
                     onClose={handleClose}
+                    size="lg"
                 >
                     <Box sx={style}>
                     <div className="cart__header">
@@ -94,10 +96,10 @@ const Cart = () => {
                                 <div className="options">
                                     <div className="total__amount">
                                         <div className="total__amount__label">Total Amount:</div>
-                                        <div className="total__amount__value">${cartItems.totalAmount}.00</div>
+                                        <div className="total__amount__value">₹ {cartItems.totalAmount}.00</div>
                                     </div>
                                     <div className="checkout">
-                                        <Button variant="outlined" onClick={handleCheckout}>Checkout</Button>
+                                        <Button variant="outlined" onClick={handleCheckout}>Order</Button>
                                     </div>
                                 </div>
                             }
@@ -108,7 +110,17 @@ const Cart = () => {
                 <Modal
                 open={openCheckoutModal}
                 onClose={handleCheckoutClose}
-            >
+                >
+                    <Box sx={style}>
+                    <div className="d-flex w-100 h-100 justify-content-center align-items-center">
+                        <h2>Your checkout was successful</h2>
+                    </div>
+                    </Box>
+                </Modal>
+                <Modal
+                open={openCheckoutModal}
+                onClose={handleCheckoutClose}
+                >
                     <Box sx={style}>
                     <div className="d-flex w-100 h-100 justify-content-center align-items-center">
                         <h2>Your checkout was successful</h2>

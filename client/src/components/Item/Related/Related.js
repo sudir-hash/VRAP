@@ -10,11 +10,11 @@ const Related = (props) => {
     const [ kidsItems, setKidsItems ] = useState()
 
     useEffect(() => {
-        axios.get("https://shema-backend.vercel.app/api/items")
+        axios.get("http://localhost:8003/product/view-all")
             .then(res => {
-                setMenItems(res.data.filter((item) => item.category === "men"))
-                setKidsItems(res.data.filter((item) => item.category === "kids" ))
-                setWomenItems(res.data.filter((item) => item.category === "women"))
+                console.log('response from website')
+                console.log(res.data)
+                // setMenItems(res.data.map)
             })
             .catch(err => console.log(err))
     }, [])
@@ -32,8 +32,8 @@ const Related = (props) => {
                 <div className="related__card__container">
                     <div className="related__product__card">
                         { menItems && props.category === "men" && menItems.map((item) => <RelatedCard item={item}/>)}
-                        { womenItems && props.category === "women" && womenItems.map((item) => <RelatedCard item={item}/>)}
-                        { kidsItems && props.category === "kids" && kidsItems.map((item) => <RelatedCard item={item}/>)}
+                        {/* { womenItems && props.category === "women" && womenItems.map((item) => <RelatedCard item={item}/>)}
+                        { kidsItems && props.category === "kids" && kidsItems.map((item) => <RelatedCard item={item}/>)} */}
                         
                     </div>
                 </div>
