@@ -2,8 +2,12 @@ from fastapi import APIRouter, HTTPException
 from db import products_collection
 from schemas import Product
 from bson import ObjectId
+from fastapi import FastAPI, Depends, Request
 
 product_router = APIRouter()
+
+async def get_body(request: Request):
+    return await request.body()
 
 
 @product_router.get("/view/{product_id}")
@@ -88,11 +92,17 @@ async def delete_product(product_id: str):
 
 
 @product_router.post("/buy/{product_id}")
-async def buy_product(product_id: str):
+async def buy_product(product_id: str,body: bytes = Depends(get_body)):
     try:
         if product_id is None:
             raise HTTPException(status_code=404, detail="Product id missing")
         # TODO: Implement payment processing logic here
+        count       =   body["count"]
+        product=view_product(product_id=product_id)
+        if count>product["stock"]:
+            raise HTTPException(status_code=500,detail=f'Not enough Stocks ')
+        product["stock"]-=count
+        update_product(product_id,product)
         return {"message": f"purchase of {product_id}  processed"}
     except Exception as e:
         raise HTTPException(
