@@ -1,9 +1,10 @@
 const getFormData = (formData) => {
+    console.log(formData)
     const form = new FormData();
     for(let key in formData){
-        const form = new FormData();
         form.append(key, formData[key]);
     }
+    
     return form;
 }
 

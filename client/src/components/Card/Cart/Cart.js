@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { CartItemsContext } from '../../../Context/CartItemsContext';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -14,18 +14,20 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  minWidth: '350px',
+  minWidth: '950px',
   width: '45%',
-  height: '400px',
+  minHeight: '700px',
+  height: '80%',
   bgcolor: 'background.paper',
   border: '5px solid #FFE26E',
   borderRadius: '15px',
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 const Cart = () => {
     const navigate = useNavigate();
+   
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -34,40 +36,31 @@ const Cart = () => {
     const [ openCheckoutModal, setOpenCheckoutModal] = useState(false);
     const handleCheckoutOpen = () => setOpenCheckoutModal(true);
     const handleCheckoutClose = () => setOpenCheckoutModal(false);
-
     const cartItems = useContext(CartItemsContext);
     console.log("cartItems",cartItems);
     const handleCheckout = async () => {
-        // if(cartItems.totalAmount > 0){
             if(cartItems.totalAmount <= 0)return;
-            // const config = {
-            //     reason: 'checkout',
-            //     amount: cartItems.totalAmount
-            // }
             console.log("checkout")
             handleCheckoutOpen();
             handleClose();
-            setTimeout(()=>{
-                handleCheckoutClose();
-                navigate('/category/men');
-
-                // window.location.replace("/category/men")
-            }, 500)
-
-        // await axios.post("http://localhost:5000/api/payment", config)
-        //     .then((res) => {
-        //             console.log(res.data)
-        //             window.location.replace(res.data)
-        //             handleCheckoutOpen()
-        //         }
-        //     )
-        //     .catch((err) => console.log(err))
-        // }
-        // else {
-        //     return
-        // }
+            for(let item of cartItems.items){
+                await axios.post(`http://localhost:8003/product/buy/${item._id}`)
+                .then((res) => {
+                        console.log(res.data)
+                    }
+                )
+                .catch((err) => {
+                    console.log(err);
+                });
+                cartItems.removeItem(item)
+            }
+           
+            
+            handleCheckoutOpen();
+        }
+       
         
-    }
+    
 
     return (
         <Fragment>
@@ -77,6 +70,7 @@ const Cart = () => {
                 <Modal
                     open={open}
                     onClose={handleClose}
+                    size="lg"
                 >
                     <Box sx={style}>
                     <div className="cart__header">
@@ -94,10 +88,10 @@ const Cart = () => {
                                 <div className="options">
                                     <div className="total__amount">
                                         <div className="total__amount__label">Total Amount:</div>
-                                        <div className="total__amount__value">${cartItems.totalAmount}.00</div>
+                                        <div className="total__amount__value">₹ {cartItems.totalAmount}.00</div>
                                     </div>
                                     <div className="checkout">
-                                        <Button variant="outlined" onClick={handleCheckout}>Checkout</Button>
+                                        <Button variant="outlined" onClick={handleCheckout}>Order</Button>
                                     </div>
                                 </div>
                             }
@@ -108,7 +102,17 @@ const Cart = () => {
                 <Modal
                 open={openCheckoutModal}
                 onClose={handleCheckoutClose}
-            >
+                >
+                    <Box sx={style}>
+                    <div className="d-flex w-100 h-100 justify-content-center align-items-center">
+                        <h2>Your checkout was successful</h2>
+                    </div>
+                    </Box>
+                </Modal>
+                <Modal
+                open={openCheckoutModal}
+                onClose={handleCheckoutClose}
+                >
                     <Box sx={style}>
                     <div className="d-flex w-100 h-100 justify-content-center align-items-center">
                         <h2>Your checkout was successful</h2>

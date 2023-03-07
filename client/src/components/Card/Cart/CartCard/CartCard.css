@@ -4,6 +4,7 @@
     min-height: 80px;
     height: auto;
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: row;
@@ -115,4 +116,21 @@
     position: absolute;
     top: 0%;
     right: 0%;
+}
+
+.customization{
+    margin: 10px;
+    justify-self: flex-end;
+    width: 100%;
+    padding: 10px;
+}
+
+.customization textarea{
+   width: 100%;
+   margin: 5px;
+   line-height: normal;
+   resize: none;
+   border: none;
+   outline: none;
+   padding:15px;
 }
