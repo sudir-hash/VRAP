@@ -13,10 +13,9 @@ const Shop = () => {
 
   useEffect(() => {
     axios
-      .get("https://shema-backend.vercel.app/api/items")
+      .get("http://localhost:8003/product/view-all")
       .then((res) => {
-        setMenItems(res.data.filter((item) => item.category === "men"));
-        
+        setMenItems(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));

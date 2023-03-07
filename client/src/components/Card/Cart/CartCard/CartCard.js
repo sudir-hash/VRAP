@@ -11,19 +11,19 @@ import { IconButton } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { maxWidth } from '@mui/system';
 
 
 const CartCard = (props) => {
     let cartItems  = useContext(CartItemsContext)
-    console.log(props.item)
     const [size, setSize] = useState(props.item.size[0]);
-
+    const [quantity, setQuantity] = useState(props.item.itemQuantity);
     const handelQuantityIncrement = (event) => {
+        setQuantity(quantity+1);
         cartItems.quantity(props.item.id, 'INC');
     };
 
     const handelQuantityDecrement = (event) => {
+        setQuantity(quantity-1);
         if(props.item.itemQuantity >1){
             cartItems.quantity(props.item.id, 'DEC');
         }
@@ -49,7 +49,7 @@ const CartCard = (props) => {
                 <IconButton onClick={handelQuantityIncrement}>
                     <AddCircleIcon />
                 </IconButton>
-                <div type="text" name="quantity" className="quantity__input">{props.item.itemQuantity}</div>
+                <div type="text" name="quantity" className="quantity__input">{quantity}</div>
                 <IconButton onClick={handelQuantityDecrement}>
                     <RemoveCircleIcon fontSize='medium'/>
                 </IconButton>

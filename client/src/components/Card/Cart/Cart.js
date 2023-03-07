@@ -44,7 +44,19 @@ const Cart = () => {
             handleCheckoutOpen();
             handleClose();
             for(let item of cartItems.items){
-                await axios.post(`http://localhost:8003/product/buy/${item._id}`)
+                console.log(item,"item")
+                await axios.post(
+                    `http://0.0.0.0:8003/product/buy/${item._id}`,
+                    {
+                      count: 10,
+                    },
+                    {
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                      // crossOriginIsolated: true,
+                    }
+                  )
                 .then((res) => {
                         console.log(res.data)
                     }

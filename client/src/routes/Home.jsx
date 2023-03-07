@@ -22,7 +22,7 @@ const Home = () => {
         <Fragment>
             <Landing />
             <FeaturedCategories />
-            <FeaturedItems items={featuredItems}/>
+            {/* <FeaturedItems items={featuredItems}/> */}
         </Fragment>
     );
 }

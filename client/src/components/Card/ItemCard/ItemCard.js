@@ -20,7 +20,6 @@ const ItemCard = (props) => {
         console.log(props.item)
         cartItemsContext.addItem(props.item, 1)
     }
-    console.log(props.item)
 
     return ( 
         <div className="product__card__card">
@@ -29,8 +28,10 @@ const ItemCard = (props) => {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 > 
-
-                    {!isHovered? <img src={props.item.image_url[0]} alt="item" className="product__img"/>: <img src={props.item.image_url[props.item.image_url.length>1?1:0]} alt="item" className="product__img"/> }
+                    {
+                        Array.isArray(props.item.image_url)?props.item.image_url.length>0?!isHovered? <img src={props.item.image_url[0]} alt="item" className="product__img"/>: <img src={props.item.image_url[props.item.image_url.length>1?1:0]} alt="item" className="product__img"/> 
+                        :<img src={props.item.image_url[0]} alt="item" className="product__img"/>:null
+                    }
                 </div>
                 <div className="product__card__detail">
                     {/* <div className="product__name">
