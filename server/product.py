@@ -2,8 +2,11 @@ from fastapi import APIRouter, HTTPException
 from db import products_collection
 from schemas import Product
 from bson import ObjectId
+from fastapi import FastAPI, Depends, Request
 
 product_router = APIRouter()
+
+
 
 
 @product_router.get("/view/{product_id}")
@@ -88,12 +91,31 @@ async def delete_product(product_id: str):
 
 
 @product_router.post("/buy/{product_id}")
-async def buy_product(product_id: str):
+async def buy_product(product_id: str,body: dict):
+    print(product_id,body)
     try:
+        print(product_id,body)
         if product_id is None:
             raise HTTPException(status_code=404, detail="Product id missing")
-        # TODO: Implement payment processing logic here
-        return {"message": f"purchase of {product_id}  processed"}
+        if body['count'] is None:
+            raise HTTPException(status_code=404, detail="request body is missing")
+        product = await products_collection.find_one(
+            {"_id": ObjectId(product_id)}
+        )    
+        count   =   int(body['count'])    
+        print(product,"found product")
+        if product is None:
+            raise HTTPException(status_code=404, detail="Product not found")
+        elif product["stock"] < count:
+            raise HTTPException(status_code=404, detail="Product out of stock")
+        
+        result = await products_collection.update_one(
+            {"_id": ObjectId(product_id)}, {"$set": {"stock": product["stock"] - count}}
+        )
+        if result.modified_count == 0:
+            raise HTTPException(status_code=404, detail=f"Purchase not processed")
+
+        return {"message": f"purchase of {product_id}  processed","status":200}
     except Exception as e:
         raise HTTPException(
             status_code=404, detail=f"Error -{e}: Purchase not processed"

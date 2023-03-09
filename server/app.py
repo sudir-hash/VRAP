@@ -1,5 +1,6 @@
 from beanie import init_beanie
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from db import User, db
 from schemas import UserCreate, UserRead, UserUpdate
@@ -15,6 +16,16 @@ from users import (
 
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 current_user = fastapi_users.current_user()
 current_active_user = fastapi_users.current_user(active=True)
 current_active_user_auth = fastapi_users.current_user(
@@ -22,6 +33,7 @@ current_active_user_auth = fastapi_users.current_user(
 )
 current_active_verified_user = fastapi_users.current_user(active=True, verified=True)
 current_superuser = fastapi_users.current_user(active=True, superuser=True)
+
 
 
 @app.on_event("startup")
@@ -49,7 +61,7 @@ app.include_router(
 
 # Auth router to generate /login and /logout
 app.include_router(
-    fastapi_users.get_auth_router(jwt_backend, requires_verification=True),
+    fastapi_users.get_auth_router(jwt_backend, requires_verification=False),
     prefix="/auth/jwt",
     tags=["auth"],
 )
