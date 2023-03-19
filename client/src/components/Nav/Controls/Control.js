@@ -25,7 +25,12 @@ const Control = () => {
                         </div>
                      ):
                      (
-                        <div className="control" onClick={()=>{console.log('logout');dispatch({type:"LOGOUT"})}}>
+                        <div className="control" onClick={()=>{
+                            console.log('logout');
+                            dispatch({type:"LOGOUT"});
+                            localStorage.removeItem('user');
+                            localStorage.removeItem('access_token');
+                        }}>
                                 <LogoutOutlined color="black" size="large" sx={{ width: '35px'}}/>
                         </div>
                      )
