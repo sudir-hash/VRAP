@@ -10,7 +10,7 @@ const CategoryView = () => {
     const [ womenItems, setWomenItems ] = useState()
     const [ kidsItems, setKidsItems ] = useState()
     const [ loading , setLoading ] = useState(true) 
-    console.log('category view',param.id)
+    //console.log('category view',param.id)
     useEffect(() => {
         axios.get("http://localhost:8003/product/view-all")
         // .then(res => console.log(res.data))

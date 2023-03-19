@@ -6,16 +6,16 @@ import { Button } from "@mui/material";
 const Landing = () => {
     const navigate  =   useNavigate();
     const handleClick=()=>{
-        console.log('clicked')
+        //console.log('clicked')
         let access_token    =   localStorage.getItem('access_token');
-        console.log(access_token)
+        //console.log(access_token)
         let user    =   localStorage.getItem('user');
-        console.log(user);
+        //console.log(user);
         if(access_token && user &&(user!=='null'&&access_token!=='null')){
-            console.log('logged in')
+            //console.log('logged in')
             navigate('/shop')
         }else{
-            console.log('not logged in')
+            //console.log('not logged in')
             navigate('/account/login')
         }
     }

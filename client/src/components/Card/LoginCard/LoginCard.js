@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import "./LoginCard.css";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../../Context/Context";
-import getFormData from "../../../utils/getFormData";
+// import getFormData from "../../../utils/getFormData";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import handleLogin from "../../../utils/handleLogin";
+import handleTokenExpiration from "../../../utils/handleTokenExpiration";
 
 const LoginCard = () => {
   const { dispatch } = useContext(AuthContext);
@@ -15,21 +16,25 @@ const LoginCard = () => {
   const passwordRef = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let email = emailRef.current.value;
-    let password = passwordRef.current.value;
+    let email = emailRef.current.value.trim();
+    let password = passwordRef.current.value.trim();
     if (!email || !password) {
       return toast("Empty Email or Password");
     }
     dispatch({ type: "LOGIN_START" });
     handleLogin({ email, password })
       .then((res) => {
-        console.log("res", res);
+        //console.log("res", res);
         if (!res.ok) {
           dispatch({ type: "LOGIN_FAILURE" });
           toast(res.error);
         } else if (res.data.access_token) {
           dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+          handleTokenExpiration(dispatch);
           navigate("/");
+        }else if(res.code){
+          dispatch({ type: "LOGIN_FAILURE" });
+          toast(res.code==="ERR_NETWORK"?"Network Error":"Please login again");
         } else {
           dispatch({ type: "LOGIN_FAILURE" });
           toast("Please login again");
@@ -56,7 +61,7 @@ const LoginCard = () => {
               className="email__input login__input"
               placeholder="example@gmail.com"
               ref={emailRef}
-              value="newuser0login@gmail.com"
+              // value="newuser0login@gmail.com"
             />
           </div>
           <div className="password__input__container input__container">
@@ -65,7 +70,7 @@ const LoginCard = () => {
               type="password"
               className="password__input login__input"
               placeholder="**********"
-              value={"Patrick#123456"}
+              // value={"Patrick#123456"}
               ref={passwordRef}
             />
           </div>

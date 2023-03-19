@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import './NavLinks.css'
 
 const NavLinks = () => {
+
     return ( 
             <nav className="nav__bottom__container">
                 <div className="bottom__container">

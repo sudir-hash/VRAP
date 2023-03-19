@@ -37,14 +37,13 @@ const Cart = () => {
     const handleCheckoutOpen = () => setOpenCheckoutModal(true);
     const handleCheckoutClose = () => setOpenCheckoutModal(false);
     const cartItems = useContext(CartItemsContext);
-    console.log("cartItems",cartItems);
     const handleCheckout = async () => {
             if(cartItems.totalAmount <= 0)return;
-            console.log("checkout")
+            //console.log("checkout")
             handleCheckoutOpen();
             handleClose();
             for(let item of cartItems.items){
-                console.log(item,"item")
+                //console.log(item,"item")
                 await axios.post(
                     `http://0.0.0.0:8003/product/buy/${item._id}`,
                     {
@@ -58,7 +57,7 @@ const Cart = () => {
                     }
                   )
                 .then((res) => {
-                        console.log(res.data)
+                        //console.log(res.data)
                     }
                 )
                 .catch((err) => {

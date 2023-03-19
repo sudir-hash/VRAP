@@ -3,7 +3,7 @@ import Search from "../components/Search";
 
 const SearchView = () => {
     const param = useParams()
-    console.log(param.query)
+    //console.log(param.query)
     return ( 
         <Search />
      );
