@@ -30,7 +30,8 @@ const handleLogin=async({email,password})=>{
       console.log("err", err);
       return {
         ok:false,
-        error:err
+        error:err,
+        code:err.code 
       }
     }
 }
