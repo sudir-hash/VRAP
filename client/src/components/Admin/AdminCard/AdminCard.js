@@ -26,11 +26,11 @@ const AdminCard = () => {
             desc,
             stock
         }
-        console.log(product);
+        //console.log(product);
         //fetch to post the product
         try {
-          let response    = await axios.post("http://localhost:8003/product/list",product);
-          console.log(response);
+          const response    = await axios.post("http://localhost:8003/product/list",product);
+          //console.log(response);
         } catch (error) {
           
         }

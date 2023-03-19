@@ -28,7 +28,7 @@ const RegisterCard = () => {
         address,
       };
       form = JSON.stringify(form);
-      console.log(form, typeof form);
+      //console.log(form, typeof form);
       const res = await fetch("http://localhost:8003/auth/register", {
         method: "POST",
         headers: {
@@ -42,7 +42,7 @@ const RegisterCard = () => {
       // if(!data.hasOwnProperty('detail'))
       //    navigate('/account/login')
       // else{
-      //   console.log("error", data.detail);
+      //   //console.log("error", data.detail);
       //   toast("error while registering", data.detail);
       //     setTimeout(()=>navigate('/account/register'),500)
       //   ;
@@ -50,7 +50,7 @@ const RegisterCard = () => {
     } catch (err) {
       toast("error while registering", err.detail);
       window.location.href = "/register";
-      console.log("err", err);
+      //console.log("err", err);
     }
   };
 

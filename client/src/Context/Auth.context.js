@@ -19,7 +19,7 @@ export const ContextProvider = props => {
   const setLoginSuccess = (isLoggedIn) => setState({isLoggedIn});
   const setLoginError = (loginError) => setState({loginError});
   const login = (email, password) => {
-    console.log('login initiated')
+    //console.log('login initiated')
     setLoginPending(true);
     setLoginSuccess(false);
     setLoginError(null);

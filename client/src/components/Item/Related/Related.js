@@ -12,8 +12,8 @@ const Related = (props) => {
     useEffect(() => {
         axios.get("http://localhost:8003/product/view-all")
             .then(res => {
-                console.log('response from website')
-                console.log(res.data)
+                //console.log('response from website')
+                //console.log(res.data)
                 // setMenItems(res.data.map)
             })
             .catch(err => console.log(err))

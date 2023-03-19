@@ -24,7 +24,7 @@ const LoginCard = () => {
     dispatch({ type: "LOGIN_START" });
     handleLogin({ email, password })
       .then((res) => {
-        console.log("res", res);
+        //console.log("res", res);
         if (!res.ok) {
           dispatch({ type: "LOGIN_FAILURE" });
           toast(res.error);

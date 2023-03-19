@@ -17,7 +17,7 @@ const ItemCard = (props) => {
     }
 
     const handleAddToCart = () => {
-        console.log(props.item)
+        //console.log(props.item)
         cartItemsContext.addItem(props.item, 1)
     }
 
