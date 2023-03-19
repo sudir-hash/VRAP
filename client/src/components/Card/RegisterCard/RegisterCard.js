@@ -14,10 +14,10 @@ const RegisterCard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let name = nameRef.current.value;
-    let email = emailRef.current.value;
-    let password = passwordRef.current.value;
-    let address = addressRef.current.value;
+    let name = nameRef.current.value.trim();
+    let email = emailRef.current.value.trim();
+    let password = passwordRef.current.value.trim();
+    let address = addressRef.current.value.trim();
     if (!name || !email || !password || !address) {
       return toast("Empty Fields Kindly Fill All Fields");
     }
@@ -39,14 +39,13 @@ const RegisterCard = () => {
       });
       const data = await res.json();
       console.log("data", data);
-      // if(!data.hasOwnProperty('detail'))
-      //    navigate('/account/login')
-      // else{
-      //   //console.log("error", data.detail);
-      //   toast("error while registering", data.detail);
-      //     setTimeout(()=>navigate('/account/register'),500)
-      //   ;
-      // }
+      if(!data.hasOwnProperty('detail'))
+         navigate('/account/login')
+      else{
+        //console.log("error", data.detail);
+        toast("error while registering", data.detail);
+        setTimeout(()=>navigate('/account/register'),500);
+      }
     } catch (err) {
       toast("error while registering", err.detail);
       window.location.href = "/register";
@@ -77,7 +76,7 @@ const RegisterCard = () => {
               className="email__input register__input"
               placeholder="example@gmail.com"
               ref={emailRef}
-              value="newuser0login@gmail.com"
+              // value="newuser0login@gmail.com"
             />
           </div>
           <div className="password__input__container reg__input__container">
@@ -86,7 +85,7 @@ const RegisterCard = () => {
               type="password"
               className="password__input register__input"
               ref={passwordRef}
-              value="Patrick#123456"
+              // value="Patrick#123456"
             />
           </div>
           <div className="password__input__container reg__input__container">
@@ -95,7 +94,7 @@ const RegisterCard = () => {
               type="text"
               className="password__input register__input"
               ref={addressRef}
-              value="1234, 5th Street, New York, NY 10001"
+              // value="1234, 5th Street, New York, NY 10001"
             />
           </div>
           <div className="register__button__container">
