@@ -11,22 +11,31 @@ const ManageAccount = () => {
                         <div className="edit__account__form__container">
                             <div className="edit__account__form">
                                 <div className="fname__input__container edit__input__container">
-                                    <label className="fname__label input__label">First name</label>
+                                    <label className="fname__label input__label"> Name</label>
                                     <input type="text" className="fname__input edit__account__input" />
                                 </div>
-                                <div className="lname__input__container edit__input__container">
-                                    <label className="lname__label input__label">Last name</label>
-                                    <input type="text" className="lname__input edit__account__input"/>
+                                <div className="email__input__container edit__input__container">
+                                    <label className="email__label input__label"> Email</label>
+                                    <input type="text" className="email__input edit__account__input" />
+                                </div>
+                                <div className="password__input__container edit__input__container">
+                                    <label className="password__label input__label"> Password</label>
+                                    <input type="text" className="password__input edit__account__input" />
                                 </div>
                                 <div className="save__changes__button__container">
                                     <button className="save__changes__button" >Save Changes</button>
                                 </div>
+                                {/* <div className="lname__input__container edit__input__container">
+                                    <label className="lname__label input__label">Last name</label>
+                                    <input type="text" className="lname__input edit__account__input"/>
+                                </div> */}
                             </div>
                         </div>
                     </div>
+                    {/* <div className="separator__line"></div> */}
                 </div>
-                <div className="separator__line"></div>
-                <div className="delete_account__container">
+               
+                {/* <div className="delete_account__container">
                     <div className="delete__account">
                         <div className="delete__account__header">
                             Delete account
@@ -36,8 +45,9 @@ const ManageAccount = () => {
                             <button className="delete__account__button" >Delete Account</button>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
+            
         </Account>
      );
 }

@@ -5,7 +5,7 @@ import { SearchContext } from '../../Context/SearchContext';
 import './index.css'
 
 const Search = () => {
-    const search = useContext(SearchContext)
+    const search = useContext(SearchContext);
     const [ searchParam, setSearchParam ] = useSearchParams()
 
     const searchQuery = {
@@ -17,7 +17,7 @@ const Search = () => {
     }, [searchQuery.query])
 
     return ( 
-        <div className="search__container">
+        <div className="search__container" >
             <div className="search__container__header">
                 <h1>No results found for "{search.searchQuery}"</h1>
             </div>
