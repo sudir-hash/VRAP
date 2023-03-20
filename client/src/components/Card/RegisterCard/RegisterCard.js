@@ -42,8 +42,9 @@ const RegisterCard = () => {
       if(!data.hasOwnProperty('detail'))
          navigate('/account/login')
       else{
-        //console.log("error", data.detail);
-        toast("error while registering", data.detail);
+        console.log("error", data.detail);
+        // toast();
+        toast.error(`${data.detail.split('_').join(' ')}`)
         setTimeout(()=>navigate('/account/register'),500);
       }
     } catch (err) {
@@ -66,7 +67,8 @@ const RegisterCard = () => {
               type="text"
               className="fname__input register__input"
               ref={nameRef}
-              value="John Doe"
+              placeholder="John Doe"
+              // value="John Doe"
             />
           </div>
           <div className="email__input__container reg__input__container">
@@ -75,8 +77,8 @@ const RegisterCard = () => {
               type="email"
               className="email__input register__input"
               placeholder="example@gmail.com"
+              // value="example@gmail.com"
               ref={emailRef}
-              // value="newuser0login@gmail.com"
             />
           </div>
           <div className="password__input__container reg__input__container">
@@ -85,6 +87,7 @@ const RegisterCard = () => {
               type="password"
               className="password__input register__input"
               ref={passwordRef}
+              placeholder="*****"
               // value="Patrick#123456"
             />
           </div>
@@ -94,6 +97,7 @@ const RegisterCard = () => {
               type="text"
               className="password__input register__input"
               ref={addressRef}
+              placeholder="1234, 5th Street, New York, NY 10001"
               // value="1234, 5th Street, New York, NY 10001"
             />
           </div>
@@ -120,6 +124,7 @@ const RegisterCard = () => {
         draggable
         pauseOnHover
         theme="light"
+        
       />
     </div>
   );

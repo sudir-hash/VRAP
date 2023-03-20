@@ -19,12 +19,12 @@ const LoginCard = () => {
     let email = emailRef.current.value.trim();
     let password = passwordRef.current.value.trim();
     if (!email || !password) {
-      return toast("Empty Email or Password");
+      let msg=!email?!password?"Email and Password":"Email":"Password";
+      return toast.error(msg+"is empty");
     }
     dispatch({ type: "LOGIN_START" });
     handleLogin({ email, password })
       .then((res) => {
-        //console.log("res", res);
         if (!res.ok) {
           dispatch({ type: "LOGIN_FAILURE" });
           toast(res.error);
@@ -34,16 +34,16 @@ const LoginCard = () => {
           navigate("/");
         }else if(res.code){
           dispatch({ type: "LOGIN_FAILURE" });
-          toast(res.code==="ERR_NETWORK"?"Network Error":"Please login again");
+          toast.error(res.code==="ERR_NETWORK"?"Network Error":"Please login again");
         } else {
           dispatch({ type: "LOGIN_FAILURE" });
-          toast("Please login again");
+          toast.error("Please login again");
         }
       })
       .catch((e) => {
         dispatch({ type: "LOGIN_FAILURE" });
-        console.error("error while logging in", e);
-        toast("Please login again");
+        // console.error("error while logging in", e);
+        toast.error("Please login again");
       });
   };
 
