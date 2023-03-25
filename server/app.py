@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from db import User, db
 from schemas import UserCreate, UserRead, UserUpdate
 from product import product_router
+from Shop import shop_router
 from users import (
     SECRET,
     jwt_backend,
@@ -58,6 +59,14 @@ app.include_router(
     prefix="/product",
     tags=["product"],
 )
+
+# Shop CRUD operations
+app.include_router(
+    shop_router,
+    prefix="/shop",
+    tags=["shop"],
+)
+
 
 # Auth router to generate /login and /logout
 app.include_router(

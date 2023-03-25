@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./RegisterCard.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import getLocation from "../../../utils/getLocation";
 
 const RegisterCard = () => {
   const nameRef = useRef();
@@ -11,6 +12,7 @@ const RegisterCard = () => {
   const passwordRef = useRef();
   const addressRef = useRef();
   const navigate = useNavigate();
+  const [location,setLocation]=useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,8 @@ const RegisterCard = () => {
     let email = emailRef.current.value.trim();
     let password = passwordRef.current.value.trim();
     let address = addressRef.current.value.trim();
+    getLocation(setLocation,toast);
+    console.log(location);
     if (!name || !email || !password || !address) {
       return toast("Empty Fields Kindly Fill All Fields");
     }
@@ -26,6 +30,7 @@ const RegisterCard = () => {
         email,
         password,
         address,
+        location:location,
       };
       form = JSON.stringify(form);
       //console.log(form, typeof form);

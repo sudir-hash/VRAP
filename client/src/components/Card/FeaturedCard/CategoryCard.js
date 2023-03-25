@@ -17,7 +17,7 @@ const CategoryCard = (props) => {
                             <Button variant='outlined' sx={[{'&:hover': { backgroundColor: 'none', borderColor: '#FFE26E', color: '#FFE26E'}, borderRadius: '20px' , borderColor: '#FFE26E', backgroundColor: "#FFE26E" , color: "#000", fontWeight: '700'}]}>{props.data.storeName}</Button>
                         </Link>
                     </div>
-            </div>
+                </div>
         </div>
      );
 }

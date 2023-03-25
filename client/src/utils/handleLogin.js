@@ -27,7 +27,7 @@ const handleLogin=async({email,password})=>{
         data:payload
       };
     } catch (err) {
-      console.log("err", err);
+      console.log("err", err.message);
       return {
         ok:false,
         error:err,
