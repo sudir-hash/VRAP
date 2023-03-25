@@ -6,22 +6,30 @@ import FeaturedCard from "../../Card/FeaturedCard/FeaturedCategoryCard";
 import getLocation from "../../../utils/getLocation";
 
 import './FeaturedCategories.css'
+import { toast, ToastContainer } from "react-toastify";
 
 
 
 
 const Categories = () => {
     const [shops,setShops]=useState([]);
-    const [location,setLocation]=useState([0,0]);
+    // const [location,setLocation]=useState([0,0]);
     
     const getFeaturedCategories = async () => {
         try {
-            console.log(location)
+            // console.log(location)
+            let latitude    =   parseFloat(localStorage.getItem('latitude'))
+            let longitude   =   parseFloat(localStorage.getItem('longitude'))
+            
+            if(latitude===NaN || longitude===NaN){
+                toast('unable to get location')
+            }
+
             const response = await axios.post(
                 'http://localhost:8003/shop/getShops',
                 {
-                    latitude: location[0],
-                    longitude: location[1]
+                    latitude: latitude,
+                    longitude: longitude
                 },{
                     headers: {
                         'Content-Type': 'application/json',
@@ -37,8 +45,6 @@ const Categories = () => {
     }
     const featuredCategories = useContext(FeatureCategoryContext);
     useEffect(() => {
-        // getLocation(setLocation)
-        getLocation(setLocation)
         getFeaturedCategories()
 
     }, [])
@@ -55,6 +61,17 @@ const Categories = () => {
                     {/* { featuredCategories.map((category) =>  <CategoryCard key={category.id} data={category}/>)} */}
                     { shops.map((category) =>  <FeaturedCard key={category.id} data={category}/>)}
                 </div>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </div>
         </div>  
      );
