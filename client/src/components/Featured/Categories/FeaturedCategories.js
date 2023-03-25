@@ -12,10 +12,10 @@ import './FeaturedCategories.css'
 
 const Categories = () => {
     const [shops,setShops]=useState([]);
-    const [location,setLocation]=useState({latitude:0,longitude:0});
+    const [location,setLocation]=useState([0,0]);
+    
     const getFeaturedCategories = async () => {
         try {
-            getLocation(setLocation)
             console.log(location)
             const response = await axios.post(
                 'http://localhost:8003/shop/getShops',
@@ -37,9 +37,9 @@ const Categories = () => {
     }
     const featuredCategories = useContext(FeatureCategoryContext);
     useEffect(() => {
-        window.scrollTo(0, 0)
+        // getLocation(setLocation)
+        getLocation(setLocation)
         getFeaturedCategories()
-
 
     }, [])
 
