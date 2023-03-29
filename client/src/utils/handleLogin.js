@@ -1,12 +1,13 @@
 import handleVerification from "./handleVerification";
 import getFormData from "./getFormData";
 import axios from "axios";
+import BASE_URL from "../constants/BASE_URL";
 const handleLogin=async({email,password})=>{
     
     try {
     //  const verified = await handleVerification(email,password);
     //  if(verified.data.detail) return toast(verified.data.detail);
-      const res = await axios('http://localhost:8003/auth/jwt/login',{
+      const res = await axios(BASE_URL+'/auth/jwt/login',{
         method:'POST',
         data:getFormData({username:email,password}),
         headers:{

@@ -3,6 +3,7 @@ FROM node:16.19-alpine3.16 AS builder
 WORKDIR /app
 COPY package.json .
 RUN npm install
+ENV BASE_URL="http://localhost:8003"
 COPY . .
 RUN npm run build
 

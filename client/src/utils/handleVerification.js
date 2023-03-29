@@ -1,9 +1,10 @@
 import axios from 'axios';
+import BASE_URL from '../constants/BASE_URL';
 const handleVerification = async() => {
     try {
-        const token = await axios.get('http://localhost:8003/auth/request-verify-token');
+        const token = await axios.get(BASE_URL+'/auth/request-verify-token');
         //console.log("token", token);
-        const verified  =   await axios.post('http://localhost:8003/auth/verify-token', {
+        const verified  =   await axios.post(BASE_URL+'/auth/verify-token', {
             token: token.data.token
         });
         //console.log("verified", verified);

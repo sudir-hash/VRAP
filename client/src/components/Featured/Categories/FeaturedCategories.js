@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useContext, useEffect,useState } from "react";
 import { FeatureCategoryContext } from "../../../Context/FeaturedCategoryContext";
-import CategoryCard from "../../Card/FeaturedCard/CategoryCard";
+// import CategoryCard from "../../Card/FeaturedCard/CategoryCard";
 import FeaturedCard from "../../Card/FeaturedCard/FeaturedCategoryCard";
-import getLocation from "../../../utils/getLocation";
+// import getLocation from "../../../utils/getLocation";
+import BASE_URL from '../../../constants/BASE_URL'
 
 import './FeaturedCategories.css'
 import { toast, ToastContainer } from "react-toastify";
@@ -26,7 +27,7 @@ const Categories = () => {
             }
 
             const response = await axios.post(
-                'http://localhost:8003/shop/getShops',
+                BASE_URL+'/shop/getShops',
                 {
                     latitude: latitude,
                     longitude: longitude

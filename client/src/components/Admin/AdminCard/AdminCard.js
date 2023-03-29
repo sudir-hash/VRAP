@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import "../../../css/AdminPage.css";
 import axios from "axios";
 import {toast, ToastContainer} from 'react-toastify'
+import BASE_URL from '../../../constants/BASE_URL'
 
 const AdminCard = () => {
   const nameReference = useRef();
@@ -30,7 +31,7 @@ const AdminCard = () => {
     console.log(product)
     try {
       const response = await axios.post(
-        "http://localhost:8003/product/list",
+        BASE_URL+"/product/list",
         product
       );
       // console.log(response);

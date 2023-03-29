@@ -5,7 +5,7 @@ import ShopCategory from "../components/Shop/Container/ShopCategory";
 import ReactLoading from "react-loading";
 import "../css/AdminPage.css";
 import AdminCard from "../components/Admin/AdminCard/AdminCard";
-
+import BASE_URL from "../constants/BASE_URL";
 const Shop = () => {
   TabTitle("Shop - SHEMA");
   const [menItems, setMenItems] = useState();
@@ -13,7 +13,7 @@ const Shop = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8003/product/view-all")
+      .get(BASE_URL+"/product/view-all")
       .then((res) => {
         setMenItems(res.data);
         setLoading(false);
