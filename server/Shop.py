@@ -14,6 +14,7 @@ class Shop(BaseModel):
     image_url: List[str]
     category: str
     distance: float
+    url:str
 
 
 
@@ -30,7 +31,8 @@ async def add_shop(body: dict):
         "shopname": body['shopname'],
         "coordinates": body['coordinates'],
         "image_url": body['image_url'],
-        "category": body['category']
+        "category": body['category'],
+        "url": body['url'],
     }
     result = await shops_collection.insert_one(shop)
     print(result,"added")
@@ -82,7 +84,8 @@ def distance_between_points(lat1, lon1, lat2, lon2):
   "shopname": "Example Shop",
   "coordinates": ["40.7128", "-74.0060"],
   "image_url": ["https://example.com/image.jpg"],
-  "category": "Example Category"
+  "category": "Example Category",
+  "url":"Example"
 }
 
 '''

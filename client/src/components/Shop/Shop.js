@@ -26,8 +26,7 @@ const Shop = () => {
        
         axios.get("http://localhost:8003/product/view-all")
             .then(res => {
-                let items=res.data.map(item=>({...item,image:item.image_url}))
-                //console.log(items)
+                console.log(res.data)
                 setMenItems(res.data)
                 setLoading(false)
             })

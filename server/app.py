@@ -1,6 +1,7 @@
 from beanie import init_beanie
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI,Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
 
 from db import User, db
 from schemas import UserCreate, UserRead, UserUpdate
@@ -16,6 +17,7 @@ from users import (
 )
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates/")
 
 origins = ["*"]
 
@@ -164,3 +166,4 @@ def protected_route_verify(user: User = Depends(current_active_verified_user)):
 @app.get("/protected-route/superuser", tags=["auth"])
 def protected_route_superuser(user: User = Depends(current_superuser)):
     return f"Hello, {user.email}"
+

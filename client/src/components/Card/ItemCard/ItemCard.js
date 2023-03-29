@@ -11,7 +11,6 @@ const ItemCard = (props) => {
     const [isHovered, setIsHovered] = useState(false)
     const  cartItemsContext  = useContext(CartItemsContext)
     const wishItemsContext = useContext(WishItemsContext)
-
     const handleAddToWishList = () => {
         wishItemsContext.addItem(props.item)
     }
