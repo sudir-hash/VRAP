@@ -58,12 +58,18 @@ span{
 
 .category__name {
     height: 50%;
-    width: 60%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    
     font-size: 1.2rem;
     font-weight: 500;
+
+    background-color: #fff9e0;
+    padding: 0;
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 10px;
+    
 }
 
 .category__description {
