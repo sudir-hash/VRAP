@@ -61,7 +61,6 @@ const LoginCard = () => {
               className="email__input login__input"
               placeholder="example@gmail.com"
               ref={emailRef}
-              // value="newuser0login@gmail.com"
             />
           </div>
           <div className="password__input__container input__container">
@@ -70,7 +69,6 @@ const LoginCard = () => {
               type="password"
               className="password__input login__input"
               placeholder="**********"
-              // value={"Patrick#123456"}
               ref={passwordRef}
             />
           </div>

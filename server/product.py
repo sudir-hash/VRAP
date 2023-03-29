@@ -40,7 +40,7 @@ async def view_all_products():
 @product_router.post("/list")
 async def sell_product(product: Product):
     try:
-        if product is None:
+        if product is None: 
             raise HTTPException(status_code=404, detail="Product info missing")
         result = await products_collection.insert_one(product.dict())
         if result is None:

@@ -12,7 +12,7 @@ const FeaturedCard = (props) => {
                 </div>
                 <div className="category__card__detail">
                     <div className="category__name">
-                        <span>{Number(distance).toFixed(1)/1000}km</span>
+                        <span>{parseInt((distance)/1000)}km</span>
                     </div>
                     <div className="category__card__action">
                         <Link to={props.data.url}>
